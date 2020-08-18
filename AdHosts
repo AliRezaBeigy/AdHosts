@@ -1,0 +1,24 @@
+removeJunk() { 
+	printf -- '%s' "${1}" | sed -e 's/[[:blank:]]*#.*//' | sed -e 's/\b0.0.0.0\b//'  | sed -e 's/\bbroadcasthost\b//' | sed -e 's/\blocal\b//' | sed -e 's/\blocalhost.localdomain\b//' | sed -e 's/\blocalhost\b//'; 
+}
+
+matchHosts() { 
+	response=$(curl -s $1)
+	removeJunk "$response" | grep -oP $2
+}
+
+main() {
+	hosts=$(matchHosts https://adaway.org/hosts.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts0 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts1 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt "\\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/justdomains/blocklists/master/lists/nocoin-justdomains.txt "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://phishing.army/download/phishing_army_blocklist.txt "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	result=$(printf -- '%s' "$hosts" | sort | uniq -u)
+	lines=$(printf -- '%s' "$result" | wc -l)
+	echo "[+] $lines Hosts Gathered"
+	echo "$result" > AdHosts.list
+}
+
+main "$@"
