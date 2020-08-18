@@ -8,7 +8,8 @@ matchHosts() {
 }
 
 main() {
-	hosts=$(matchHosts https://adaway.org/hosts.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts=$(matchHosts https://raw.githubusercontent.com/AliRezaBeigy/AdHosts/master/AdHosts.list "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://adaway.org/hosts.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts0 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts1 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")

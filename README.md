@@ -9,3 +9,6 @@ $ cd AdHosts
 $ sudo chmod a+x AdHosts
 $ ./AdHosts
 ```
+# Contributing
+### I love contributions!
+feel free to contribute. there is no complex step to contributing, you can improve AdHosts script to contribute this repository or update AdHosts.list to improve generated hosts file
