@@ -15,7 +15,7 @@ main() {
 	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts0 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/mitchellkrogza/Ultimate.Hosts.Blacklist/master/hosts/hosts1 "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt "\s+\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
-	hosts+=$(matchHosts https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt "\\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
+	hosts+=$(matchHosts https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://raw.githubusercontent.com/justdomains/blocklists/master/lists/nocoin-justdomains.txt "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	hosts+=$(matchHosts https://phishing.army/download/phishing_army_blocklist.txt "\K([a-zA-Z0-9]+([-.]*[a-zA-Z0-9]+)*.[a-zA-Z]+)")
 	result=$(printf -- '%s' "$hosts" | sort | awk '!seen[$0]++')
